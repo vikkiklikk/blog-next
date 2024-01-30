@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 
 const BlogForm = () => {
   const handleChange = (
@@ -16,8 +16,17 @@ const BlogForm = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log("submitted");
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const res = await fetch("api/Posts", {
+      method: "POST",
+      body: JSON.stringify({ blogData }),
+      "content-type": "application/json",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to create Post");
+    }
   };
 
   const startingBlogData: { title: string; description: string } = {
@@ -53,6 +62,7 @@ const BlogForm = () => {
           value={blogData.description}
           rows={5}
         />
+        <input type="submit" className="btn" value="Create Post" />
       </form>
     </div>
   );

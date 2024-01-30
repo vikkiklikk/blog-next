@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Blog } from "../(models)/Blog";
-import { IBlog } from "../(models)/Blog";
+import { Blog } from "../../(models)/Blog";
+import { IBlog } from "../../(models)/Blog";
 
 interface PostRequestBody {
   formData: IBlog;
