@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
 const BlogForm = () => {
+  const router = useRouter();
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -18,7 +20,7 @@ const BlogForm = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await fetch("api/Posts", {
+    const res = await fetch("/api/Posts", {
       method: "POST",
       body: JSON.stringify({ blogData }),
       headers: {
@@ -29,6 +31,9 @@ const BlogForm = () => {
     if (!res.ok) {
       throw new Error("Failed to create Post");
     }
+
+    router.refresh();
+    router.push("/");
   };
 
   const startingBlogData: { title: string; description: string } = {

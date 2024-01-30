@@ -6,10 +6,17 @@ interface PostRequestBody {
   formData: IBlog;
 }
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("POST RAN");
   try {
     if (req.method === "POST") {
       const body: PostRequestBody = JSON.parse(req.body);
