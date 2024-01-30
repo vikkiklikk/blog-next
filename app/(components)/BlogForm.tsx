@@ -21,7 +21,9 @@ const BlogForm = () => {
     const res = await fetch("api/Posts", {
       method: "POST",
       body: JSON.stringify({ blogData }),
-      "content-type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (!res.ok) {
