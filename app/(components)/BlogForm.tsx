@@ -20,9 +20,9 @@ const BlogForm = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await fetch("/api/Posts", {
+    const res = await fetch("/app/api/Posts", {
       method: "POST",
-      body: JSON.stringify({ blogData }),
+      body: JSON.stringify({ formData: blogData }), // Update key to match API route
       headers: {
         "Content-Type": "application/json",
       },

@@ -1,32 +1,33 @@
+// /app/api/Posts/route.ts
+
 import { NextApiRequest, NextApiResponse } from "next";
-import { Blog } from "../../(models)/Blog";
-import { IBlog } from "../../(models)/Blog";
 
-interface PostRequestBody {
-  formData: IBlog;
-}
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
+// Example middleware (uncomment and customize as needed)
+/*
+export const middleware = (req: NextApiRequest, res: NextApiResponse, next) => {
+  // Middleware logic here
+  next();
 };
+*/
 
+// Export named functions for each HTTP method
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("POST RAN");
-  try {
-    if (req.method === "POST") {
-      const body: PostRequestBody = JSON.parse(req.body);
-      const blogData = body.formData;
-      await Blog.create(blogData);
-      res.status(201).json({ message: "Blog Created" });
-    } else {
-      res.status(405).json({ message: "Invalid Method" });
+  if (req.method === "POST") {
+    // Handle POST logic
+    try {
+      const { formData } = req.body;
+      // Your logic to create a post using formData
+
+      res.status(201).json({ message: "Post created successfully" });
+    } catch (error) {
+      console.error("Error creating post:", error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
-  } catch (error) {
-    res.status(500).json({ message: "Error", error });
+  } else {
+    // Default handler for other methods
+    res.status(405).json({ message: "Method Not Allowed" });
   }
 }
